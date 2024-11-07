@@ -34,7 +34,7 @@ export interface PDFViewerOptions {
   /** Callback to receive render errors. */
   readonly onRenderError?: (reason: unknown) => void
 
-  readonly urlInterrupter?: (url: string) => Promise<string>
+  readonly urlInterrupter?: (url: string, prefix: string, taskId: string) => Promise<string>
   // Range request size, default is 128 kB.
   readonly rangeChunkSize?: number
 }
@@ -173,7 +173,7 @@ export class PDFViewer implements IDisposable<void> {
     this.pdfjsLib.then(async (pdfjs) => {
       let sourceUrl = `${options.prefix}staticConvert/${options.taskId}/${options.taskId}.qpdf`;
       if (options.urlInterrupter) {
-        sourceUrl = await options.urlInterrupter(sourceUrl)
+        sourceUrl = await options.urlInterrupter(sourceUrl, options.prefix, options.taskId);
       }
       if (this.destroyed) return
       this.pdfjs = pdfjs
