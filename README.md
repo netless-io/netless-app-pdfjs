@@ -28,7 +28,19 @@ A [Netless App](https://github.com/netless-io/netless-app) that renders PDF file
    import { register } from "@netless/fastboard"
    import { install } from "@netless/app-pdfjs"
 
-   install(register, options) // the app is named 'PDFjs'
+   install(register, {
+     // private bucket
+     urlInterrupter: async (url: string, prefix: string, taskId: string) => {
+       // There will be different implementations depending on different cloud storage services. Generally, signatures are added to the query parameters.
+       // method 1: Add a signature to the query parameters. 
+       const { ak, expire } = await getSTSToken() // Customer service side implementation.
+       return `${url}?expire=${expire}&ak=${ak}`
+       
+       // method 2: Add a signature to the path.
+       const url = await getTokenByParams(prefix, taskId) // Customer service side implementation.
+       return url;
+     }
+   }) // the app is named 'PDFjs'
    ```
 
 4. Add this app **after** joinning room.
@@ -66,7 +78,7 @@ To alter this URL or choose a different version, set the app option:
 install(register, {
   appOptions: {
     pdfjsLib: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.min.mjs',
-    workerSrc: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.worker.min.mjs'
+    workerSrc: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.worker.min.mjs',
   }
 })
 ```
