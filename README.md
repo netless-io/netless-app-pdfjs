@@ -65,6 +65,12 @@ A [Netless App](https://github.com/netless-io/netless-app) that renders PDF file
 
    You can get the `prefix` and `taskId` from the conversion response JSON.
 
+### notice
+>1. When not using urlInterrupter, pdfjs app generates the url by taking 2 parameters prefix and taskid and concatenate them in a fixed format. I think it is better to explain this part and give the default format example. Then highlight that if customer needs different url format, they can use urlInterrupter. 
+>2. appOptions is setup only when joining room. So customer needs to make sure the url they generate is valid during the classroom. If it expires, user needs to rejoin so that appOptions which contains urlInterrupter can be triggered again and a new valid pdf file url will be fetched.
+>3. 'taskid'(customer's own id) needs to be static for the room. When user quit, room state will be stored in our backend. We need this taskid to retrieve the information associated with the pdf file. This id needs to be unique across rooms. The pdfjs information stored in a path created with the scenePath. The scenePath is linked to taskId. Our taskId is unique across the rooms so we recommend using taskId. But if customer can make sure their id is unique, they can also use their own customized id. 
+This is important for the case when user wants to review the class after it ends. User needs to input the same 'taskid' to retrieve previous room state. 
+
 ## Troubleshooting
 
 ### Failed to fetch pdf.min.mjs
