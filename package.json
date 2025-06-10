@@ -1,6 +1,6 @@
 {
   "name": "@netless/app-pdfjs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Netless App for viewing raw PDF files, using PDF.js",
   "author": "netless",
   "license": "MIT",
@@ -23,8 +23,8 @@
     "@hyrious/configs": "^0.1.1",
     "@hyrious/dts": "^0.2.1",
     "@hyrious/esbuild-dev": "^0.10.5",
-    "@netless/fastboard": "^0.3.15",
-    "@netless/window-manager": "^0.4.72",
+    "@netless/fastboard": "^1.0.6",
+    "@netless/window-manager": "^1.0.4",
     "@types/node": "^20.12.8",
     "@wopjs/async-seq": "^0.1.0",
     "@wopjs/disposable": "^0.1.5",

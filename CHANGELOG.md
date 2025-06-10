@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.6 (2025-06-10)
+
+- Added app option `justDocsViewReadonly` to customize initial.
+- Added app result `setDocsViewReadonly(isReadonly:boolean)`. in the write permission, 
+  just set docsView readonly, whiteboard keeps writable.
+
 ## 0.1.4 (2024-06-06)
 
 - Add option `rangeChunkSize`. ([#9](https://github.com/netless-io/netless-app-pdfjs/pull/9))
