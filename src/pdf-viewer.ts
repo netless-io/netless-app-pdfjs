@@ -155,6 +155,8 @@ export class PDFViewer implements IDisposable<void> {
   touched: { [page: number]: true } = Object.create(null)
   pageIndex = 0
 
+  protected docsViewReadonly = false
+
   constructor(options: PDFViewerOptions) {
     const pdfjsLib = options.pdfjsLib || 'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.min.mjs'
     const workerSrc = options.workerSrc || inferWorkerSrc(pdfjsLib)
@@ -334,7 +336,7 @@ export class PDFViewer implements IDisposable<void> {
     pageNumber.appendChild(this.totalPageDOM)
 
     this.dispose.add(listen(window, 'keydown', ev => {
-      if (this.readonly || this.isEditable(ev.target)) return
+      if (this.readonly || this.isEditable(ev.target) || this.docsViewReadonly) return
       if (ev.key == 'ArrowUp' || ev.key == 'ArrowLeft')
         this.onNewPageIndex(this.pageIndex - 1, 'keydown')
       else if (ev.key == 'ArrowDown' || ev.key == 'ArrowRight')

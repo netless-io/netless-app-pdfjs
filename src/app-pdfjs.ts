@@ -30,6 +30,8 @@ export interface PDFjsAppOptions extends Pick<PDFViewerOptions, "pdfjsLib" | "wo
   maxCameraScale?: number
   /** Custom logger. Default: a logger that reports to the whiteboard server. */
   readonly log?: Logger
+  /** justDocsViewReadonly is used to set the docs view readonly, it will be used in the docs view, and the docs view will be readonly when the app is initialized */
+  justDocsViewReadonly?: true;
 }
 
 const DefaultMaxCameraScale = 3
@@ -70,6 +72,10 @@ export class AppPDFViewer extends PDFViewer {
   override onRenderError(reason: unknown): void {
     super.onRenderError(reason)
     this.log && this.log(`[PDFjs]: render error ${reason}`)
+  }
+
+  setDocsViewReadonly(bol:boolean) {
+    this.docsViewReadonly = bol
   }
 }
 
@@ -246,6 +252,10 @@ export const NetlessAppPDFjs: NetlessApp<PDFjsAppAttributes, {}, PDFjsAppOptions
     app.scaleDocsToFit = scaleDocsToFit
     app.syncPDFView = syncPDFView
     app.log = log
+
+    if (options.justDocsViewReadonly) {
+      app.setDocsViewReadonly(true)
+    }
 
     // Prepare scenes.
     if (context.isAddApp) app.ready.then(() => {
